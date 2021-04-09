@@ -7,6 +7,7 @@
                 <span class="lbl">Performance</span>
             </a>
         </li> -->
+        @if(Auth::user()->isAdmin())
         <li class="pink-red  with-sub {{ (request()->segment(1) == 'employee' || request()->segment(1) == 'role' || request()->segment(1) == 'designation' || request()->segment(1) == 'department') ? 'opened' : '' }}">
             <span>
                 <i class="font-icon font-icon-user"></i>
@@ -23,6 +24,7 @@
                 <li><a href="/department/add"><span class="lbl">Add Department</span></a></li>
             </ul>
         </li>
+        @endif
         <li class="red with-sub {{ (request()->segment(1) == 'holiday') ? 'opened' : '' }}">
             <span class="label-right">
                 <i class="font-icon font-icon-contacts"></i>
@@ -31,7 +33,9 @@
             </span>
             <ul>
                 <li><a href="/holiday"><span class="lbl">List</span></a></li>
+                @if(Auth::user()->isAdmin())
                 <li><a href="/holiday/add"><span class="lbl">Add</span></a></li>
+                @endif
             </ul>
         </li>
         <li class="magenta with-sub {{ (request()->segment(1) == 'leave') ? 'opened' : '' }}">
@@ -43,7 +47,9 @@
                 <li><a href="/leave"><span class="lbl">List</span></a></li>
                 <li><a href="/leave/add"><span class="lbl">Add</span></a></li>
                 <li><a href="/leave/entitlement"><span class="lbl">Entitlement</span></a></li>
+                @if(Auth::user()->isAdmin())
                 <li><a href="/leave/add-entitlement"><span class="lbl">Add Entitlement</span></a></li>
+                @endif
             </ul>
         </li>
         <li class="blue-dirty with-sub {{ (request()->segment(1) == 'salary') ? 'opened' : '' }}">
@@ -53,7 +59,9 @@
             </span>
             <ul>
                 <li><a href="/salary"><span class="lbl">List</span></a></li>
+                @if(Auth::user()->isAdmin())
                 <li><a href="/salary/add"><span class="lbl">Add</span></a></li>
+                @endif
             </ul>
         </li>
     </ul>

@@ -11,6 +11,34 @@
 					<div class="tbl-row">
 						<div class="tbl-cell list-header">
 							<h2>Leave Table</h2>
+							@if($is_admin == 0)
+								<div>
+								<h5>Leaves Left</h5>
+								<table>
+									<?php
+										foreach($entitled as $entitle)
+										{
+											$total_days = $entitle->no_of_days;
+											$days_taken = 0;
+											foreach($leaves as $leave)
+											{
+												if($leave->entitled == $entitle->leave_name)
+												{
+													$days_taken = floatval($days_taken + $leave->duration);
+												}
+											}
+											$days_left = floatval($total_days - $days_taken);
+											?>
+											<tr>
+												<td><strong>{{$entitle->leave_name}} :</strong></td>
+												<td>{{$days_left}}</td>
+											</tr>
+											<?php
+										}
+									?>
+								</table>
+								</div>
+							@endif
 							<div class="subtitle-btn"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_leaves") }}'">Add +</button></div>
 						</div>
 					</div>

@@ -11,7 +11,9 @@
 					<div class="tbl-row">
 						<div class="tbl-cell list-header">
 							<h2>Entitlement Table</h2>
+							@if(Auth::user()->isAdmin())
 							<div class="subtitle"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_entitlement") }}'">Add +</button></div>
+							@endif
 						</div>
 					</div>
 				</div>

@@ -11,7 +11,9 @@
 					<div class="tbl-row">
 						<div class="tbl-cell list-header">
 							<h2>Holiday Table</h2>
+							@if(Auth::user()->isAdmin())
 							<div class="subtitle"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_holidays") }}'">Add +</button></div>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -23,12 +25,14 @@
 						<tr>
 							<th>Date & Day</th>
 							<th>Name</th>
+							<th>Action</th>
 						</tr>
 						</thead>
 						<tfoot>
 						<tr>
                             <th>Date & Day</th>
 							<th>Name</th>
+							<th>Action</th>
 						</tr>
 						</tfoot>
 						<tbody>
@@ -41,6 +45,7 @@
 						<tr>
 							<td>{{$formatted_date}} {{$day}}</td>
 							<td>{{$holiday->holiday_name}}</td>
+							<td><a href="/holiday/edit/{{$holiday->id}}"><i class="fa fa-pencil"></i></a></td>
 						</tr>
 						@endforeach
 						</tbody>

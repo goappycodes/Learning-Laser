@@ -11,7 +11,7 @@
                     <div class="tbl-cell">
                         <h3>Designations</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Designations</a></li>
+                            <li><a href="/designation">Designations</a></li>
                             <li class="active">Add Designation</li>
                         </ol>
                     </div>

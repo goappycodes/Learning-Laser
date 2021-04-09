@@ -15,14 +15,16 @@ class EntitledLeavesSeeder extends Seeder
             [
                 'leave_name' => 'Casual Leave',
                 'no_of_days' => 21,
-                'period' => 'Annual',
+                'period' => '1 Year',
+                'starting_month' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
                 'leave_name' => 'Medical Leave',
                 'no_of_days' => 10,
-                'period' => 'Annual',
+                'period' => '1 Year',
+                'starting_month' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]

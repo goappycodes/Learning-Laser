@@ -11,7 +11,9 @@
 					<div class="tbl-row">
 						<div class="tbl-cell list-header">
 							<h2>Salary Table</h2>
+							@if(Auth::user()->isAdmin())
 							<div class="subtitle"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_salaries") }}'">Add +</button></div>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -26,6 +28,7 @@
                             <th>Current Salaray</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
+							<th>Action</th>
 						</tr>
 						</thead>
 						<tfoot>
@@ -35,6 +38,7 @@
                             <th>Current Salaray</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
+							<th>Action</th>
 						</tr>
 						</tfoot>
 						<tbody>
@@ -45,6 +49,7 @@
                             <td>{{$salary->current_salary}}</td>
 							<td>{{$months[$salary->appraisal_month - 1]}}</td>
                             <td>{{$salary->note}}</td>
+							<td><a href="/salary/edit/{{$salary->id}}"><i class="fa fa-pencil"></i></a></td>
 						</tr>
 						@endforeach
 						</tbody>

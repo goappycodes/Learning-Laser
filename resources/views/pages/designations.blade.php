@@ -22,12 +22,14 @@
 						<thead>
 						<tr>
 							<th>Designations</th>
+							<th>Action</th>
 						</tr>
 						</thead>
 						<tbody>
 						@foreach($designations as $designation)
 						<tr>
 							<td>{{$designation->designation_name}}</td>
+							<td><a href="/designation/edit/{{$designation->id}}"><i class="fa fa-pencil"></i></a></td>
 						</tr>
 						@endforeach
 						</tbody>

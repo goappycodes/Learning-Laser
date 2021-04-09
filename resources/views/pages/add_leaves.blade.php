@@ -11,7 +11,7 @@
                     <div class="tbl-cell">
                         <h3>Leaves</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Leaves</a></li>
+                            <li><a href="{{route('leaves')}}">Leaves</a></li>
                             <li class="active">Add Leave</li>
                         </ol>
                     </div>
@@ -25,19 +25,27 @@
                     <div class="col-lg-8">
 						<fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Employee</label>
+                            @if($is_admin == 1)
 							<select class="form-control" name="user_id" id="exampleInput">
                                 <option value="">Select</option>
                                 @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->f_name}} {{$user->l_name}}</option>
                                 @endforeach
                             </select>
+                            @else
+                            <select class="form-control" name="user_id" id="exampleInput">
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->f_name}} {{$user->l_name}}</option>
+                                @endforeach
+                            </select>
+                            @endif
 						</fieldset>
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Entitlement</label>
 							<select class="form-control" name="entitled" id="exampleInput">
                                 <option value="">Select</option>
                                 @foreach($entitled as $leave)
-                                <option value="{{$leave->id}}">{{$leave->leave_name}} ({{$leave->no_of_days}})</option>
+                                <option value="{{$leave->id}}" data-no-days="{{$leave->no_of_days}}">{{$leave->leave_name}} ({{$leave->no_of_days}})</option>
                                 @endforeach
                             </select>
 						</fieldset>

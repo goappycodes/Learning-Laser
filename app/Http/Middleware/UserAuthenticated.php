@@ -19,13 +19,17 @@ class UserAuthenticated
         if( Auth::check() )
         {
 
-            if ( Auth::user()->isAdmin() ) {
-                 return redirect(route('employees'));
-            }
+            // if ( Auth::user()->isAdmin() ) {
+            //      return redirect(route('employees'));
+            // }
 
 
-            else if ( Auth::user()->isUser() ) {
-                 return $next($request);
+            // else if ( Auth::user()->isUser() ) {
+            //      return $next($request);
+            // }
+
+            if ( Auth::user()->isUser() || Auth::user()->isAdmin()) {
+                return $next($request);
             }
         }
 

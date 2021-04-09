@@ -20,7 +20,7 @@ class AdminAuthenticated​
         {
 
             if ( Auth::user()->isUser() ) {
-                 return redirect(route('user_dashboard'));
+                 return redirect(route('dashboard'));
             }
 
 

@@ -30,7 +30,7 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'e
 
 	Route::get('/add', 'EmployeeController@add_employees')->name('add_employees');
 
-	Route::get('/edit', 'EmployeeController@edit_employees')->name('edit_employees');
+	Route::get('/edit/{id}', 'EmployeeController@edit_employees')->name('edit_employees');
 
 	Route::post('/emp-post', 'EmployeeController@post_employees')->name('post_employees');
 	
@@ -38,11 +38,11 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'e
 
 Route::group(array('prefix' => 'holiday'), function()
 {
-	Route::get('/', 'LeaveController@holidays')->name('holidays')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/', 'LeaveController@holidays')->name('holidays')->middleware(UserAuthenticated::class);
 
 	Route::get('/add', 'LeaveController@add_holidays')->name('add_holidays')->middleware(AdminAuthenticated​::class);
 
-	Route::get('/edit', 'LeaveController@edit_holidays')->name('edit_holidays')->middleware(AdminAuthenticated​::class);
+	Route::get('/edit/{id}', 'LeaveController@edit_holidays')->name('edit_holidays')->middleware(AdminAuthenticated​::class);
 
 	Route::post('/post', 'LeaveController@post_holidays')->name('post_holidays')->middleware(AdminAuthenticated​::class);
 
@@ -50,15 +50,15 @@ Route::group(array('prefix' => 'holiday'), function()
 
 Route::group(array('prefix' => 'leave'), function()
 {
-	Route::get('/', 'LeaveController@leaves')->name('leaves')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/', 'LeaveController@leaves')->name('leaves')->middleware(UserAuthenticated::class);
 
-	Route::get('/add', 'LeaveController@add_leaves')->name('add_leaves')->middleware(AdminAuthenticated​::class);
+	Route::get('/add', 'LeaveController@add_leaves')->name('add_leaves')->middleware(UserAuthenticated::class);
 
-	Route::get('/edit', 'LeaveController@edit_leaves')->name('edit_leaves')->middleware(AdminAuthenticated​::class);
+	Route::get('/edit', 'LeaveController@edit_leaves')->name('edit_leaves')->middleware(UserAuthenticated::class);
 
-	Route::post('/post', 'LeaveController@post_leaves')->name('post_leaves')->middleware(AdminAuthenticated​::class);
+	Route::post('/post', 'LeaveController@post_leaves')->name('post_leaves')->middleware(UserAuthenticated::class);
 
-	Route::get('/entitlement', 'LeaveController@entitlements')->name('entitlements')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/entitlement', 'LeaveController@entitlements')->name('entitlements')->middleware(UserAuthenticated::class);
 
 	Route::get('/add-entitlement', 'LeaveController@add_entitlement')->name('add_entitlement')->middleware(AdminAuthenticated​::class);
 
@@ -69,13 +69,13 @@ Route::group(array('prefix' => 'leave'), function()
 
 Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'salary'), function()
 {
-	Route::get('/', 'EmployeeController@salaries')->name('salaries')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/', 'EmployeeController@salaries')->name('salaries')->middleware(UserAuthenticated::class);
 
-	Route::get('/add', 'EmployeeController@add_salaries')->name('add_salaries')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/add', 'EmployeeController@add_salaries')->name('add_salaries')->middleware(AdminAuthenticated​::class);
 
-	Route::get('/edit', 'EmployeeController@edit_salaries')->name('edit_salaries')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::get('/edit/{id}', 'EmployeeController@edit_salaries')->name('edit_salaries')->middleware(AdminAuthenticated​::class);
 
-	Route::post('/post', 'EmployeeController@post_salaries')->name('post_salaries')->middleware([UserAuthenticated::class, AdminAuthenticated​::class]);
+	Route::post('/post', 'EmployeeController@post_salaries')->name('post_salaries')->middleware(AdminAuthenticated​::class);
 });
 
 Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'role'), function()
@@ -95,7 +95,7 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'd
 
 	Route::get('/add', 'EmployeeController@add_designations')->name('add_designations');
 
-	Route::get('/edit', 'EmployeeController@edit_designations')->name('edit_designations');
+	Route::get('/edit/{id}', 'EmployeeController@edit_designations')->name('edit_designations');
 
 	Route::post('/post', 'EmployeeController@post_designations')->name('post_designations');
 });
@@ -106,7 +106,7 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'd
 
 	Route::get('/add', 'EmployeeController@add_departments')->name('add_departments');
 
-	Route::get('/edit', 'EmployeeController@edit_departments')->name('edit_departments');
+	Route::get('/edit/{id}', 'EmployeeController@edit_departments')->name('edit_departments');
 
 	Route::post('/post', 'EmployeeController@post_departments')->name('post_departments');
 });

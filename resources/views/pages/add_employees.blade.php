@@ -13,7 +13,7 @@
                     <div class="tbl-cell">
                         <h3>Employees</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Employees</a></li>
+                            <li><a href="/employee">Employees</a></li>
                             <li class="active">Add Employee</li>
                         </ol>
                     </div>

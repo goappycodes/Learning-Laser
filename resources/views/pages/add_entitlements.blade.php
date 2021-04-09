@@ -38,6 +38,15 @@
                             </select>
                         </fieldset>
                         <fieldset class="form-group">
+                            <label class="form-label" for="date-mask-input">Starting Month</label>
+                            <select class="form-control" name="starting_month" id="exampleInput">
+                                <option value="">Select</option>
+                                @foreach($months as $month_key => $month)
+                                    <option value="{{$month_key + 1}}">{{$month}}</option>
+                                @endforeach
+                            </select>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <button type="submit" class="btn btn-inline">Submit</button>
                         </fieldset>
 					</div>

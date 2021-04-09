@@ -9,28 +9,24 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Holidays</h3>
+                        <h3>Departments</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="/holiday">Holidays</a></li>
-                            <li class="active">Add Holiday</li>
+                            <li><a href="/department">Departments</a></li>
+                            <li class="active">Edit Department</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </header>
         <div class="box-typical box-typical-padding">
-            <form method="post" action="{{url('holiday/post')}}">
+            <form method="post" action="{{url('department/post')}}">
                 @csrf
+                <input type="hidden" name="id" id="exampleInput" value="{{$department->id}}">
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <fieldset class="form-group">
-                            <label class="form-label semibold" for="date-mask-input">Holiday Date</label>
-                            <input type="text" class="form-control date-mask-input" name="holiday_date" id="holiday_date">
-                            <small class="text-muted">Date format: 00/00/0000</small>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label class="form-label semibold" for="date-mask-input">Holiday Name</label>
-                            <input type="text" class="form-control" name="holiday_name" id="holiday_name" placeholder="Holiday Name">
+                            <label class="form-label semibold" for="date-mask-input">Department Name</label>
+                            <input type="text" class="form-control" name="department_name" id="department_name" placeholder="Department Name" value="{{$department->department_name}}">
                         </fieldset>
                         <fieldset class="form-group">
                             <button type="submit" class="btn btn-inline">Submit</button>

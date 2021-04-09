@@ -18,6 +18,7 @@ class CreateEntitledLeavesTable extends Migration
             $table->string('leave_name')->nullable();
             $table->integer('no_of_days')->nullable();
             $table->string('period')->nullable();
+            $table->integer('starting_month')->nullable();
             $table->timestamps();
         });
     }

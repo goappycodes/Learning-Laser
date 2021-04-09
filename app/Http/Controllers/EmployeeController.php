@@ -42,9 +42,14 @@ class EmployeeController extends Controller
         return view('pages.add_employees',['roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements]);
     }
 
-    public function edit_employees()
+    public function edit_employees($id)
     {
-        return view('pages.edit_employees');
+        $user = User::find($id);
+        $roles = DB::select("select * from roles");
+        $designations = DB::select("select * from designations");
+        $departments = DB::select("select * from departments");
+        $entitlements = DB::select("select * from entitled_leaves");
+        return view('pages.edit_employees',['user' => $user, 'roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements]);
     }
 
     public function post_employees(Request $request)
@@ -59,8 +64,17 @@ class EmployeeController extends Controller
         $input['joining_date'] = date('Y-m-d', strtotime($date));
         $date = str_replace('/', '-', $input['dob']);
         $input['dob'] = date('Y-m-d', strtotime($date));
-        User::insert($input);
-        return redirect()->route('add_employees');
+        if(isset($input['id']))
+        {
+            $row_id = $input['id'];
+            unset($input['id']);
+            User::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            User::insert($input);
+        }
+        return redirect()->route('employees');
     }
 
     public function salaries()
@@ -77,12 +91,29 @@ class EmployeeController extends Controller
         return view('pages.add_salary',['users' => $users, 'months' => $months]);
     }
 
+    public function edit_salaries($id)
+    {
+        $salary = Salary::find($id);
+        $users = DB::select("select * from users");
+        $months = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December', );
+        return view('pages.edit_salary',['users' => $users, 'months' => $months, 'salary' => $salary]);
+    }
+
     public function post_salaries(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
-        Salary::insert($input);
-        return redirect()->route('add_salaries');
+        if(isset($input['id']))
+        {
+            $row_id = $input['id'];
+            unset($input['id']);
+            Salary::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            Salary::insert($input);
+        }
+        return redirect()->route('salaries');
     }
 
     public function roles()
@@ -115,11 +146,26 @@ class EmployeeController extends Controller
         return view('pages.add_designations');
     }
 
+    public function edit_designations($id)
+    {
+        $designation = Designation::find($id);
+        return view('pages.edit_designations',['designation' => $designation]);
+    }
+
     public function post_designations(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
-        Designation::insert($input);
+        if(isset($input['id']))
+        {
+            $row_id = $input['id'];
+            unset($input['id']);
+            Designation::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            Designation::insert($input);
+        }
         return redirect()->route('add_designations');
     }
 
@@ -134,11 +180,26 @@ class EmployeeController extends Controller
         return view('pages.add_departments');
     }
 
+    public function edit_departments($id)
+    {
+        $deparment = Department::find($id);
+        return view('pages.edit_departments',['department' => $department]);
+    }
+
     public function post_departments(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
-        Department::insert($input);
+        if(isset($input['id']))
+        {
+            $row_id = $input['id'];
+            unset($input['id']);
+            Department::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            Department::insert($input);
+        }
         return redirect()->route('add_departments');
     }
 }

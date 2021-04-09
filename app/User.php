@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public static function fetch_users()
     {
-        $user_rows = DB::select("Select f_name, l_name, email, employee_id, role_id, department_id, designation_id, DATE_FORMAT(  `joining_date` ,'%d-%m-%Y' )  as joining_date, CASE WHEN gender = 1 THEN 'Male' ELSE 'Female' END as gender, DATE_FORMAT(  `dob` ,'%d-%m-%Y' )  as dob, ph_no, local_address, permanent_address, roles.role_name, departments.department_name, designations.designation_name From users as u Left Join roles ON u.role_id = roles.id Left Join departments ON u.department_id = departments.id Left Join designations ON u.designation_id = designations.id ");
+        $user_rows = DB::select("Select u.id, f_name, l_name, email, employee_id, role_id, department_id, designation_id, DATE_FORMAT(  `joining_date` ,'%d-%m-%Y' )  as joining_date, CASE WHEN gender = 1 THEN 'Male' ELSE 'Female' END as gender, DATE_FORMAT(  `dob` ,'%d-%m-%Y' )  as dob, ph_no, local_address, permanent_address, roles.role_name, departments.department_name, designations.designation_name From users as u Left Join roles ON u.role_id = roles.id Left Join departments ON u.department_id = departments.id Left Join designations ON u.designation_id = designations.id ");
         return $user_rows;
     }
 
