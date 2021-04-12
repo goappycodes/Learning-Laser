@@ -2,3 +2,13 @@
     display: flex;
     justify-content: space-between;
 }
+
+#example {
+    table-layout: fixed;
+}
+
+#example tr,
+#example th {
+    word-break: break-word;
+    font-size: 0.9em;
+}
