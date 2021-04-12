@@ -65,6 +65,8 @@ Route::group(array('prefix' => 'leave'), function()
 	Route::get('/edit-entitlement/{id}', 'LeaveController@edit_entitlement')->name('edit_entitlement')->middleware(AdminAuthenticated​::class);
 
 	Route::post('/post-entitlement', 'LeaveController@post_entitlement')->name('post_entitlement')->middleware(AdminAuthenticated​::class);
+
+	Route::post('/approve-reject-leaves', 'LeaveController@approve_reject_leaves')->name('approve_reject_leaves')->middleware(AdminAuthenticated​::class);
 });
 
 Route::group(array('prefix' => 'salary'), function()

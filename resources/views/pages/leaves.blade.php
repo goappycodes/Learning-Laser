@@ -2,6 +2,7 @@
 @section("content")
 @section('assets')
     <link rel="stylesheet" href="/css/crude.css?ver=<?php echo date('Y-m-d');?>">
+	<script src="/js/leaves.js"></script>
 @endsection
 
 <div class="page-content">
@@ -39,7 +40,7 @@
 								</table>
 								</div>
 							@endif
-							<div class="subtitle-btn"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_leaves") }}'">Add +</button></div>
+							<div class="subtitle-btn"><button class="btn btn-primary btn-md"  onclick="window.location='{{ route("add_leaves") }}'">Add +</button></div>
 						</div>
 					</div>
 				</div>
@@ -56,8 +57,10 @@
 							<th>Leave From</th>
 							<th>Leave To</th>
 							<th>Duration</th>
+							<th>Status</th>
 							<th>Subject</th>
 							<th>Applied On</th>
+							<th>Action</th>
 						</tr>
 						</thead>
 						<tfoot>
@@ -69,8 +72,9 @@
 							<th>Leave From</th>
 							<th>Leave To</th>
 							<th>Duration</th>
+							<th>Status</th>
 							<th>Subject</th>
-							<th>Applied On</th>
+							<th>Action</th>
 						</tr>
 						</tfoot>
 						<tbody>
@@ -83,8 +87,10 @@
 							<td>{{$leave->leave_from}}</td>
 							<td>{{$leave->leave_to}}</td>
 							<td>{{$leave->duration}} days</td>
+							<td>@if($leave->status == 0) Pending @elseif($leave->status == 1) Approved @else Rejected @endif</td>
 							<td>{{$leave->leave_subject}}</td>
 							<td>{{$leave->created_at}}</td>
+							<td data-leave-id="{{$leave->id}}" data-remote="{{action('LeaveController@approve_reject_leaves')}}">@if($leave->status == 0) <a class="leave-approve" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> <a class="leave-reject" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a>@elseif($leave->status == 1) <a class="leave-approve" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a> @else <a class="leave-reject" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> @endif</td>
 						</tr>
 						@endforeach
 						</tbody>

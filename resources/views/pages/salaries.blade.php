@@ -12,7 +12,7 @@
 						<div class="tbl-cell list-header">
 							<h2>Salary Table</h2>
 							@if(Auth::user()->isAdmin())
-							<div class="subtitle"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_salaries") }}'">Add +</button></div>
+							<div class="subtitle"><button class="btn btn-primary btn-md"  onclick="window.location='{{ route("add_salaries") }}'">Add +</button></div>
 							@endif
 						</div>
 					</div>

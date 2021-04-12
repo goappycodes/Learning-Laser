@@ -11,7 +11,7 @@
 					<div class="tbl-row">
 						<div class="tbl-cell list-header">
 							<h2>Department Table</h2>
-							<div class="subtitle"><button class="btn-primary btn-sm"  onclick="window.location='{{ route("add_departments") }}'">Add +</button></div>
+							<div class="subtitle"><button class="btn btn-primary btn-md"  onclick="window.location='{{ route("add_departments") }}'">Add +</button></div>
 						</div>
 					</div>
 				</div>

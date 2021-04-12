@@ -1,4 +1,12 @@
 $(document).ready(function(){
+
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
     $( "#leave_from" ).datepicker({ 
         dateFormat: 'dd/mm/yy', 
         onSelect: function(dateText, inst) {
@@ -54,5 +62,43 @@ $(document).ready(function(){
     $( "#holiday_date" ).datepicker({ 
         dateFormat: 'dd/mm/yy'
     });
+
+    $('.leave-approve').click(function(){
+        var leave_id = $(this).parent().attr('data-leave-id');
+        var fetch_url = $(this).parent().attr('data-remote');
+        $.ajax({
+            type: "POST",
+            url: fetch_url,
+            data: {
+                _token : $('meta[name="csrf-token"]').attr('content'), 
+                leave_id:leave_id,
+                approve : 1
+            },
+            dataType: "text",
+            success: function(resultData) { 
+                alert('Application Approved');
+                location.reload();
+            }
+        });
+     });
+
+     $('.leave-reject').click(function(){
+        var leave_id = $(this).parent().attr('data-leave-id');
+        var fetch_url = $(this).parent().attr('data-remote');
+        $.ajax({
+            type: "POST",
+            url: fetch_url,
+            data: {
+                _token : $('meta[name="csrf-token"]').attr('content'), 
+                leave_id:leave_id,
+                approve : 2
+            },
+            dataType: "text",
+            success: function(resultData) { 
+                alert('Application Rejected');
+                location.reload();
+            }
+        });
+     });
 
 });

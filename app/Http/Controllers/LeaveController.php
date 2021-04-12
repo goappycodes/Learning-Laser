@@ -119,7 +119,7 @@ class LeaveController extends Controller
                         }
                     }
                     $leave->created_at = date('Y-m-d', strtotime($leave->created_at));
-                    if(($leave->entitled == $entitle->leave_name) && ($leave->created_at >= $starting_date))
+                    if(($leave->entitled == $entitle->leave_name) && ($leave->created_at >= $starting_date) &&($leave->status == 1))
                     {
                         $days_taken = floatval($days_taken + $leave->duration);
                     }
@@ -227,5 +227,23 @@ class LeaveController extends Controller
             Holiday::insert($input);
         }
         return redirect()->route('holidays');
+    }
+
+    public function approve_reject_leaves(Request $request)
+    {
+        $input = $request->all();
+        unset($input['_token']);
+        $approve = $input['approve'];
+        $leave_id = $input['leave_id'];
+        $leave = Leave::find($leave_id);
+        if($approve == 1)
+        {
+            $leave->status = 1;
+        }
+        else
+        {
+            $leave->status = 2;
+        }
+        $leave->save();
     }
 }
