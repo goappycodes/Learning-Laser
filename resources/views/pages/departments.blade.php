@@ -29,7 +29,7 @@
 						@foreach($departments as $department)
 						<tr>
 							<td>{{$department->department_name}}</td>
-							<td><a href="/designation/edit/{{$department->id}}"><i class="fa fa-pencil"></i></a></td>
+							<td><a href="/department/edit/{{$department->id}}"><i class="fa fa-pencil"></i></a></td>
 						</tr>
 						@endforeach
 						</tbody>

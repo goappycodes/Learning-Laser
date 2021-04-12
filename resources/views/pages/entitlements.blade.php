@@ -26,6 +26,9 @@
 							<th>Name</th>
 							<th>No of Days</th>
 							<th>Period</th>
+							@if(Auth::user()->isAdmin())
+							<th>Action</th>
+							@endif
 						</tr>
 						</thead>
 						<tfoot>
@@ -33,6 +36,9 @@
 							<th>Name</th>
 							<th>No of Days</th>
 							<th>Period</th>
+							@if(Auth::user()->isAdmin())
+							<th>Action</th>
+							@endif
 						</tr>
 						</tfoot>
 						<tbody>
@@ -41,6 +47,9 @@
 							<td>{{$entitlement->leave_name}}</td>
 							<td>{{$entitlement->no_of_days}}</td>
 							<td>{{$entitlement->period}}</td>
+							@if(Auth::user()->isAdmin())
+							<td><a href="/leave/edit-entitlement/{{$entitlement->id}}"><i class="fa fa-pencil"></i></a></td>
+							@endif
 						</tr>
 						@endforeach
 						</tbody>

@@ -62,12 +62,12 @@ Route::group(array('prefix' => 'leave'), function()
 
 	Route::get('/add-entitlement', 'LeaveController@add_entitlement')->name('add_entitlement')->middleware(AdminAuthenticated​::class);
 
-	Route::get('/edit-entitlement', 'LeaveController@edit_entitlement')->name('edit_entitlement')->middleware(AdminAuthenticated​::class);
+	Route::get('/edit-entitlement/{id}', 'LeaveController@edit_entitlement')->name('edit_entitlement')->middleware(AdminAuthenticated​::class);
 
 	Route::post('/post-entitlement', 'LeaveController@post_entitlement')->name('post_entitlement')->middleware(AdminAuthenticated​::class);
 });
 
-Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'salary'), function()
+Route::group(array('prefix' => 'salary'), function()
 {
 	Route::get('/', 'EmployeeController@salaries')->name('salaries')->middleware(UserAuthenticated::class);
 
@@ -84,7 +84,7 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'r
 
 	Route::get('/add', 'EmployeeController@add_roles')->name('add_roles');
 
-	Route::get('/edit', 'EmployeeController@edit_roles')->name('edit_roles');
+	Route::get('/edit/{id}', 'EmployeeController@edit_roles')->name('edit_roles');
 
 	Route::post('/post', 'EmployeeController@post_roles')->name('post_roles');
 });

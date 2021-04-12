@@ -70,13 +70,56 @@ class LeaveController extends Controller
             $valid_entiitlements = [];
             $entitled = DB::select("select * from entitled_leaves where id in (".$entitlements.")");
             $leaves = Leave::fetch_leaves(Auth::user()->id);
+            $current_month = date('m');
+            $current_year = date('Y');
             foreach($entitled as $entitle)
             {
                 $total_days = $entitle->no_of_days;
                 $days_taken = 0;
                 foreach($leaves as $leave)
                 {
-                    if($leave->entitled == $entitle->leave_name)
+                    $starting_month = $entitle->starting_month;
+                    $starting_month = sprintf("%02d", $starting_month);
+                    if($current_month >= $starting_month)
+                    {
+                        if($entitle->period == '1 Year')
+                        {
+                            $starting_date = $current_year.'-'.$starting_month.'-01';
+                        }
+                        elseif($entitle->period == '6 Months')
+                        {
+                            if(($current_month - $starting_month) <= 6)
+                            {
+                                $starting_date = $current_year.'-'.$starting_month.'-01';
+                            }
+                            else
+                            {
+                                $starting_date = $current_year.'-'.($starting_month + 6).'-01';
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if($entitle->period == '1 Year')
+                        {
+                            $starting_date = ($current_year-1).'-'.$starting_month.'-01';
+                        }
+                        elseif($entitle->period == '6 Months')
+                        {
+                            if(($starting_month - $current_month) <= 6)
+                            {
+                                // $starting_date = $current_year.'-'.$starting_month.'-01';
+                                $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " - 6 months"));
+                            }
+                            else
+                            {
+                                // $starting_date = $current_year.'-'.($starting_month + 6).'-01';
+                                $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " + 6 months"));
+                            }
+                        }
+                    }
+                    $leave->created_at = date('Y-m-d', strtotime($leave->created_at));
+                    if(($leave->entitled == $entitle->leave_name) && ($leave->created_at >= $starting_date))
                     {
                         $days_taken = floatval($days_taken + $leave->duration);
                     }
@@ -124,17 +167,30 @@ class LeaveController extends Controller
         return view('pages.add_entitlements',['months' => $months]);
     }
 
-    public function edit_entitlement()
+    public function edit_entitlement($id)
     {
-        return view('pages.edit_entitlements');
+        $entitlement = Entitlement::find($id);
+        $months = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December', );
+        return view('pages.edit_entitlements',['entitlement' => $entitlement, 'months' => $months]);
     }
 
     public function post_entitlement(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
-        Entitlement::insert($input);
-        return redirect()->route('add_entitlement');
+        if(isset($input['id']))
+        {
+            $input['updated_at'] = date('Y-m-d H:i:s');
+            $row_id = $input['id'];
+            unset($input['id']);
+            Entitlement::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            $input['created_at'] = date('Y-m-d H:i:s');
+            Entitlement::insert($input);
+        }
+        return redirect()->route('entitlements');
     }
 
     public function holidays()
@@ -170,6 +226,6 @@ class LeaveController extends Controller
         {
             Holiday::insert($input);
         }
-        return redirect()->route('add_holidays');
+        return redirect()->route('holidays');
     }
 }

@@ -28,7 +28,9 @@
                             <th>Current Salaray</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</thead>
 						<tfoot>
@@ -38,7 +40,9 @@
                             <th>Current Salaray</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</tfoot>
 						<tbody>
@@ -49,7 +53,9 @@
                             <td>{{$salary->current_salary}}</td>
 							<td>{{$months[$salary->appraisal_month - 1]}}</td>
                             <td>{{$salary->note}}</td>
+							@if(Auth::user()->isAdmin())
 							<td><a href="/salary/edit/{{$salary->id}}"><i class="fa fa-pencil"></i></a></td>
+							@endif
 						</tr>
 						@endforeach
 						</tbody>

@@ -12,7 +12,7 @@
                         <h3>Roles</h3>
                         <ol class="breadcrumb breadcrumb-simple">
                             <li><a href="/role">Roles</a></li>
-                            <li class="active">Add Role</li>
+                            <li class="active">Edit Role</li>
                         </ol>
                     </div>
                 </div>
@@ -21,11 +21,12 @@
         <div class="box-typical box-typical-padding">
             <form method="post" action="{{url('role/post')}}">
                 @csrf
+                <input type="hidden" name="id" id="exampleInput" value="{{$role->id}}">
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <fieldset class="form-group">
                             <label class="form-label semibold" for="date-mask-input">Role Name</label>
-                            <input type="text" class="form-control" name="role_name" id="role_name" placeholder="Role Name">
+                            <input type="text" class="form-control" name="role_name" id="role_name" placeholder="Role Name" value="{{$role->role_name}}">
                         </fieldset>
                         <fieldset class="form-group">
                             <button type="submit" class="btn btn-inline">Submit</button>

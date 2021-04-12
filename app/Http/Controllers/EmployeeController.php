@@ -7,6 +7,7 @@ use App\Role;
 use App\Designation;
 use App\Department;
 use DB;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -79,7 +80,14 @@ class EmployeeController extends Controller
 
     public function salaries()
     {
-        $salaries = Salary::fetch_user_salary();
+        if(Auth::user()->isAdmin())
+        {
+            $salaries = Salary::fetch_user_salary();
+        }
+        else
+        {
+            $salaries = Salary::fetch_user_salary(Auth::user()->id);
+        }
         $months = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July ', 'August', 'September', 'October', 'November', 'December', );
         return view('pages.salaries',['salaries' => $salaries, 'months' => $months]);
     }
@@ -127,12 +135,27 @@ class EmployeeController extends Controller
         return view('pages.add_roles');
     }
 
+    public function edit_roles($id)
+    {
+        $role = Role::find($id);
+        return view('pages.edit_roles',['role' => $role]);
+    }
+
     public function post_roles(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
-        Role::insert($input);
-        return redirect()->route('add_roles');
+        if(isset($input['id']))
+        {
+            $row_id = $input['id'];
+            unset($input['id']);
+            Role::where('id', $row_id)->update($input);
+        }
+        else
+        {
+            Role::insert($input);
+        }
+        return redirect()->route('roles');
     }
 
     public function designations()
@@ -166,7 +189,7 @@ class EmployeeController extends Controller
         {
             Designation::insert($input);
         }
-        return redirect()->route('add_designations');
+        return redirect()->route('designations');
     }
 
     public function departments()
@@ -182,7 +205,7 @@ class EmployeeController extends Controller
 
     public function edit_departments($id)
     {
-        $deparment = Department::find($id);
+        $department = Department::find($id);
         return view('pages.edit_departments',['department' => $department]);
     }
 
@@ -200,6 +223,6 @@ class EmployeeController extends Controller
         {
             Department::insert($input);
         }
-        return redirect()->route('add_departments');
+        return redirect()->route('departments');
     }
 }

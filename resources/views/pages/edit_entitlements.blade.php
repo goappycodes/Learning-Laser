@@ -19,22 +19,23 @@
         <div class="box-typical box-typical-padding">
             <form method="post" action="{{url('leave/post-entitlement')}}">
                 @csrf
+                <input type="hidden" name="id" id="exampleInput" value="{{$entitlement->id}}">
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Entitlement Name</label>
-                            <input type="text" class="form-control" name="leave_name" id="exampleInput" placeholder="Entitlement Name">
+                            <input type="text" class="form-control" name="leave_name" id="exampleInput" placeholder="Entitlement Name" value="{{$entitlement->leave_name}}">
 						</fieldset>
                         <fieldset class="form-group">
                             <label class="form-label" for="date-mask-input">No of Days</label>
-                            <input type="number" class="form-control" name="no_of_days" id="exampleInput">
+                            <input type="number" class="form-control" name="no_of_days" id="exampleInput" value="{{$entitlement->no_of_days}}">
                         </fieldset>
                         <fieldset class="form-group">
                             <label class="form-label" for="date-mask-input">Period</label>
                             <select class="form-control" name="period" id="exampleInput">
                                 <option value="">Select</option>
-                                <option value="1 Year">1 Year</option>
-                                <option value="6 Months">6 Months</option>
+                                <option value="1 Year" @if($entitlement->period == '1 Year') selected @endif>1 Year</option>
+                                <option value="6 Months" @if($entitlement->period == '6 Months') selected @endif>6 Months</option>
                             </select>
                         </fieldset>
                         <fieldset class="form-group">
@@ -42,7 +43,7 @@
                             <select class="form-control" name="starting_month" id="exampleInput">
                                 <option value="">Select</option>
                                 @foreach($months as $month_key => $month)
-                                    <option value="{{$month_key + 1}}">{{$month}}</option>
+                                    <option value="{{$month_key + 1}}" @if($entitlement->starting_month == ($month_key + 1)) selected @endif>{{$month}}</option>
                                 @endforeach
                             </select>
                         </fieldset>

@@ -25,14 +25,18 @@
 						<tr>
 							<th>Date & Day</th>
 							<th>Name</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</thead>
 						<tfoot>
 						<tr>
                             <th>Date & Day</th>
 							<th>Name</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</tfoot>
 						<tbody>
@@ -45,7 +49,9 @@
 						<tr>
 							<td>{{$formatted_date}} {{$day}}</td>
 							<td>{{$holiday->holiday_name}}</td>
+							@if(Auth::user()->isAdmin())
 							<td><a href="/holiday/edit/{{$holiday->id}}"><i class="fa fa-pencil"></i></a></td>
+							@endif
 						</tr>
 						@endforeach
 						</tbody>

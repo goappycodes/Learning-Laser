@@ -35,7 +35,7 @@
 						</fieldset>
                         <fieldset class="form-group">
                             <label class="form-label semibold" for="date-mask-input">Previous Salary</label>
-                            <input type="number" class="form-control" name="previous_salaray" id="previous_salaray">
+                            <input type="number" class="form-control" name="previous_salaray" id="previous_salaray" value="{{$salary->previous_salaray}}">
                         </fieldset>
                         <fieldset class="form-group">
                         <label class="form-label semibold" for="date-mask-input">Current Salary</label>
