@@ -60,7 +60,9 @@
 							<th>Status</th>
 							<th>Subject</th>
 							<th>Applied On</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</thead>
 						<tfoot>
@@ -74,7 +76,10 @@
 							<th>Duration</th>
 							<th>Status</th>
 							<th>Subject</th>
+							<th>Applied On</th>
+							@if(Auth::user()->isAdmin())
 							<th>Action</th>
+							@endif
 						</tr>
 						</tfoot>
 						<tbody>
@@ -90,7 +95,9 @@
 							<td>@if($leave->status == 0) Pending @elseif($leave->status == 1) Approved @else Rejected @endif</td>
 							<td>{{$leave->leave_subject}}</td>
 							<td>{{$leave->created_at}}</td>
-							<td data-leave-id="{{$leave->id}}" data-remote="{{action('LeaveController@approve_reject_leaves')}}">@if($leave->status == 0) <a class="leave-approve" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> <a class="leave-reject" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a>@elseif($leave->status == 1) <a class="leave-approve" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a> @else <a class="leave-reject" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> @endif</td>
+							@if(Auth::user()->isAdmin())
+							<td data-leave-id="{{$leave->id}}" data-remote="{{action('LeaveController@approve_reject_leaves')}}">@if($leave->status == 0) <a class="leave-approve" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> <a class="leave-reject" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a>@elseif($leave->status == 1) <a class="leave-reject" data-toggle="tooltip" title="Reject"><i class="fa fa-times"></i></a> @else <a class="leave-approve" data-toggle="tooltip" title="Approve"><i class="fa fa-check"></i></a> @endif</td>
+							@endif
 						</tr>
 						@endforeach
 						</tbody>
