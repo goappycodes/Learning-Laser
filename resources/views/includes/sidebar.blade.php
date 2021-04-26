@@ -64,5 +64,17 @@
                 @endif
             </ul>
         </li>
+        <li class="grey with-sub {{ (request()->segment(1) == 'payroll') ? 'opened' : '' }}">
+            <span>
+            <i class="fa fa-university"></i>
+                <span class="lbl">Payroll</span>
+            </span>
+            <ul>
+                <li><a href="/payroll"><span class="lbl">Payroll</span></a></li>
+                @if(Auth::user()->isAdmin())
+                <li><a href="/payroll/add"><span class="lbl">Process</span></a></li>
+                @endif
+            </ul>
+        </li>
     </ul>
 </nav>

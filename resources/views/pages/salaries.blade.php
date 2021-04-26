@@ -24,8 +24,8 @@
 						<thead>
 						<tr>
 							<th>Employee</th>
-							<th>Previous Salaray</th>
-                            <th>Current Salaray</th>
+							<th>Previous Salary</th>
+                            <th>Current Salary</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
 							@if(Auth::user()->isAdmin())
@@ -36,8 +36,8 @@
 						<tfoot>
 						<tr>
                             <th>Employee</th>
-							<th>Previous Salaray</th>
-                            <th>Current Salaray</th>
+							<th>Previous Salary</th>
+                            <th>Current Salary</th>
                             <th>Appraisal Month</th>
                             <th>Note</th>
 							@if(Auth::user()->isAdmin())

@@ -112,3 +112,16 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'd
 
 	Route::post('/post', 'EmployeeController@post_departments')->name('post_departments');
 });
+
+Route::group(array('prefix' => 'payroll'), function()
+{
+	Route::get('/', 'EmployeeController@payslip')->name('payroll')->middleware(AdminAuthenticated​::class);
+
+	Route::get('/add', 'EmployeeController@add_payrolls')->name('add_payrolls')->middleware(AdminAuthenticated​::class);
+
+	Route::get('/edit/{id}', 'EmployeeController@edit_payrolls')->name('edit_payrolls')->middleware(AdminAuthenticated​::class);
+
+	Route::post('/post', 'EmployeeController@post_payrolls')->name('post_payrolls')->middleware(AdminAuthenticated​::class);
+
+	Route::post('/create-post', 'EmployeeController@create_payrolls')->name('create_payrolls')->middleware(AdminAuthenticated​::class);
+});
