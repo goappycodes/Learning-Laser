@@ -70,9 +70,11 @@
                                 @endforeach
                             </select>
 						</fieldset>
-                        <?php
+                        @php
                             $leaves_entitled = json_decode($user->entitlements, true);
-                        ?>
+                            if (!$leaves_entitled)
+                                $leaves_entitled = array();
+                        @endphp
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Leaves Entitlement</label>
                             <select class="form-control select2" multiple="multiple" name="entitlements[]" id="exampleInput">
@@ -81,10 +83,10 @@
                                 @endforeach
                             </select>
 						</fieldset>
-                        <?php
+		                @php
                             $date_arr = explode('-',$user->joining_date);
                             $joining_date = $date_arr[2].'/'.$date_arr[1].'/'.$date_arr[0];
-                        ?>
+                        @endphp
                         <fieldset class="form-group">
                             <label class="form-label" for="date-mask-input">Joining Date</label>
                             <input type="text" class="form-control date-mask-input" name="joining_date" id="" value="{{$joining_date}}">
