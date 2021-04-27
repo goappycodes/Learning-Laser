@@ -25,7 +25,7 @@
                     <div class="col-lg-8">
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Month</label>
-							<select class="form-control" name="month" id="month">
+							<select class="form-control" name="month" id="month" required>
                                 <option value="">Select</option>
                                 @foreach($months as $month_key => $month)
                                 <option value="{{$month_key}}">{{$month}}</option>

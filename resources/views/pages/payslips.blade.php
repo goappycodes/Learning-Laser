@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-	<link rel="stylesheet" href="/css/crude.css?ver=<?php echo date('Y-m-d');?>">
+	<link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
 @endsection
 
 <div class="page-content">
@@ -43,10 +43,10 @@
 						</tfoot>
 						<tbody>
 						@foreach($payrolls as $payroll)
-                        <?php
+                        @php
                             $user = \App\User::find($payroll->user_id);
 							$joining_date = date("d-m-Y", strtotime($payroll->joining_date));
-                        ?>
+						@endphp
 						<tr>
 							<td>{{$user->f_name}} {{$user->l_name}}</td>
 							<td>{{$payroll->salary}}</td>

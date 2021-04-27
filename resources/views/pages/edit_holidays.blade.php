@@ -24,10 +24,10 @@
                 <input type="hidden" name="id" id="exampleInput" value="{{$holiday->id}}">
                 <div class="form-group row">
                     <div class="col-lg-8">
-                        <?php
+                        @php
                             $date_arr = explode('-',$holiday->holiday_date);
                             $holiday_date = $date_arr[2].'/'.$date_arr[1].'/'.$date_arr[0];
-                        ?>
+                        @endphp
                         <fieldset class="form-group">
                             <label class="form-label semibold" for="date-mask-input">Holiday Date</label>
                             <input type="text" class="form-control date-mask-input" name="holiday_date" id="holiday_date"  value="{{$holiday_date}}">

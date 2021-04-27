@@ -288,114 +288,120 @@ class EmployeeController extends Controller
         $input_date_arr = explode('-',$input_date);
         $current_month = $input_date_arr[1];
         $current_year = $input_date_arr[0];
-        $users = User::where('role_id',2)->get();
+        $users = User::all();
         foreach($users as $user)
         {
             $entitled_leaves = json_decode($user->entitlements);
-            $entitlements = [];
-            foreach($entitled_leaves as $entitled_id)
+            if($entitled_leaves)
             {
-                $entitlements[] = Entitlement::find($entitled_id);
-            }
-            $salary = Salary::where('user_id',$user->id)->first();
-            $current_salary = $salary->current_salary;
-            $joining_date = $user->joining_date;
-            $leaves = Leave::where('user_id',$user->id)->where('status',1)->get();
-            $total_deficit = 0;
-            foreach($leaves as $leave)
-            {
-                $key = array_search($leave->entitled, $entitled_leaves);
-                $entitle = $entitlements[$key];
-                $starting_month = $entitle->starting_month;
-                $starting_month = sprintf("%02d", $starting_month);
-                $days_taken = 0;
-                if($current_month >= $starting_month)
+                $entitlements = [];
+                foreach($entitled_leaves as $entitled_id)
                 {
-                    if($entitle->period == '1 Year')
+                    $entitlements[] = Entitlement::find($entitled_id);
+                }
+                $salary = Salary::where('user_id',$user->id)->first();
+                if($salary)
+                {
+                    $current_salary = $salary->current_salary;
+                    $joining_date = $user->joining_date;
+                    $leaves = Leave::where('user_id',$user->id)->where('status',1)->get();
+                    $total_deficit = 0;
+                    foreach($leaves as $leave)
                     {
-                        $starting_date = $current_year.'-'.$starting_month.'-01';
-                        $ending_date = date('Y-m-d', strtotime($starting_date . " + 1 year"));
-                    }
-                    elseif($entitle->period == '6 Months')
-                    {
-                        if(($current_month - $starting_month) <= 6)
+                        $key = array_search($leave->entitled, $entitled_leaves);
+                        $entitle = $entitlements[$key];
+                        $starting_month = $entitle->starting_month;
+                        $starting_month = sprintf("%02d", $starting_month);
+                        $days_taken = 0;
+                        if($current_month >= $starting_month)
                         {
-                            $starting_date = $current_year.'-'.$starting_month.'-01';
+                            if($entitle->period == '1 Year')
+                            {
+                                $starting_date = $current_year.'-'.$starting_month.'-01';
+                                $ending_date = date('Y-m-d', strtotime($starting_date . " + 1 year"));
+                            }
+                            elseif($entitle->period == '6 Months')
+                            {
+                                if(($current_month - $starting_month) <= 6)
+                                {
+                                    $starting_date = $current_year.'-'.$starting_month.'-01';
+                                }
+                                else
+                                {
+                                    $starting_date = $current_year.'-'.($starting_month + 6).'-01';
+                                }
+                                $ending_date = date('Y-m-d', strtotime($starting_date . " + 6 months"));
+                            }
                         }
                         else
                         {
-                            $starting_date = $current_year.'-'.($starting_month + 6).'-01';
+                            if($entitle->period == '1 Year')
+                            {
+                                $starting_date = ($current_year-1).'-'.$starting_month.'-01';
+                                $ending_date = date('Y-m-d', strtotime($starting_date . " + 1 year"));
+                            }
+                            elseif($entitle->period == '6 Months')
+                            {
+                                if(($starting_month - $current_month) <= 6)
+                                {
+                                    // $starting_date = $current_year.'-'.$starting_month.'-01';
+                                    $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " - 6 months"));
+                                }
+                                else
+                                {
+                                    // $starting_date = $current_year.'-'.($starting_month + 6).'-01';
+                                    $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " + 6 months"));
+                                }
+                                $ending_date = date('Y-m-d', strtotime($starting_date . " + 6 months"));
+                            }
                         }
-                        $ending_date = date('Y-m-d', strtotime($starting_date . " + 6 months"));
-                    }
-                }
-                else
-                {
-                    if($entitle->period == '1 Year')
-                    {
-                        $starting_date = ($current_year-1).'-'.$starting_month.'-01';
-                        $ending_date = date('Y-m-d', strtotime($starting_date . " + 1 year"));
-                    }
-                    elseif($entitle->period == '6 Months')
-                    {
-                        if(($starting_month - $current_month) <= 6)
+                        $leave->created_at = date('Y-m-d', strtotime($leave->created_at));
+                        if(($leave->entitled == $entitle->id) && (($leave->leave_from >= $starting_date)||($leave->leave_to <= $ending_date)) &&($leave->status == 1))
                         {
-                            // $starting_date = $current_year.'-'.$starting_month.'-01';
-                            $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " - 6 months"));
+                            if(($leave->leave_from >= $starting_date)&&($leave->leave_to <= $ending_date))
+                            {
+                                $days_taken = floatval($days_taken + $leave->duration);
+                            }
+                            elseif($leave->leave_from >= $starting_date)
+                            {
+                                $date1 = date_create($leave->leave_from);
+                                $date2 = date_create($ending_date);
+                                $days_taken = date_diff($date1,$date2);
+                            }
+                            elseif($leave->leave_to <= $ending_date)
+                            {
+                                $date1 = date_create($starting_date);
+                                $date2 = date_create($leave->leave_to);
+                                $days_taken = date_diff($date1,$date2);
+                            }
                         }
-                        else
+                        
+                        if(($starting_month - $current_month == 1)||($starting_month == 1 && $current_month == 12))
                         {
-                            // $starting_date = $current_year.'-'.($starting_month + 6).'-01';
-                            $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " + 6 months"));
+                            if($entitle->no_of_days < $days_taken)
+                            {
+                                $total_deficit += $days_taken - $entitle->no_of_days;
+                            }
                         }
-                        $ending_date = date('Y-m-d', strtotime($starting_date . " + 6 months"));
                     }
-                }
-                $leave->created_at = date('Y-m-d', strtotime($leave->created_at));
-                if(($leave->entitled == $entitle->id) && (($leave->leave_from >= $starting_date)||($leave->leave_to <= $ending_date)) &&($leave->status == 1))
-                {
-                    if(($leave->leave_from >= $starting_date)&&($leave->leave_to <= $ending_date))
-                    {
-                        $days_taken = floatval($days_taken + $leave->duration);
-                    }
-                    elseif($leave->leave_from >= $starting_date)
-                    {
-                        $date1 = date_create($leave->leave_from);
-                        $date2 = date_create($ending_date);
-                        $days_taken = date_diff($date1,$date2);
-                    }
-                    elseif($leave->leave_to <= $ending_date)
-                    {
-                        $date1 = date_create($starting_date);
-                        $date2 = date_create($leave->leave_to);
-                        $days_taken = date_diff($date1,$date2);
-                    }
-                }
-                
-                if(($starting_month - $current_month == 1)||($starting_month == 1 && $current_month == 12))
-                {
-                    if($entitle->no_of_days < $days_taken)
-                    {
-                        $total_deficit += $days_taken - $entitle->no_of_days;
-                    }
-                }
-            }
 
-            if($total_deficit > 0)
-            {
-                $avg_one_day_salary = ($current_salary*12)/365;
-                $net_payable = $current_salary - ($avg_one_day_salary * $total_deficit);
-                $difference_any = $current_salary - $net_payable;
-            }
-            else
-            {
-                $net_payable = $current_salary;
-                $difference_any = 0;
-            }
+                    if($total_deficit > 0)
+                    {
+                        $avg_one_day_salary = ($current_salary*12)/365;
+                        $net_payable = $current_salary - ($avg_one_day_salary * $total_deficit);
+                        $difference_any = $current_salary - $net_payable;
+                    }
+                    else
+                    {
+                        $net_payable = $current_salary;
+                        $difference_any = 0;
+                    }
 
-            $insert_arr = array('user_id'=>$user->id, 'salary' => $current_salary, 'month' => $current_month, 'year' => $current_year, 'net_payable' => $net_payable, 'difference_any' => $difference_any);
-            Payroll::where('month',$current_month)->where('year',$current_year)->delete();
-            Payroll::insert($insert_arr);
+                    $insert_arr = array('user_id'=>$user->id, 'salary' => $current_salary, 'month' => $current_month, 'year' => $current_year, 'net_payable' => $net_payable, 'difference_any' => $difference_any);
+                    Payroll::where('month',$current_month)->where('year',$current_year)->where('user_id',$user->id)->delete();
+                    Payroll::insert($insert_arr);
+                }
+            }
         }
         return redirect()->route('payroll');
     }

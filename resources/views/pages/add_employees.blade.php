@@ -1,7 +1,8 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-    <link rel="stylesheet" href="/css/separate/vendor/select2.min.css?ver=<?php echo date('Y-m-d');?>">
+    <link rel="stylesheet" href="/css/separate/vendor/select2.min.css?ver=@php echo date('Y-m-d');@endphp">
+    <link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
     <script src="/js/lib/select2/select2.full.min.js"></script>
     <script src="/js/employees.js"></script>
 @endsection

@@ -1,7 +1,8 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-    <link rel="stylesheet" href="/css/separate/vendor/select2.min.css?ver=<?php echo date('Y-m-d');?>">
+    <link rel="stylesheet" href="/css/separate/vendor/select2.min.css?ver=@php echo date('Y-m-d');@endphp">
+    <link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
     <script src="/js/lib/select2/select2.full.min.js"></script>
     <script src="/js/employees.js"></script>
 @endsection
@@ -100,10 +101,10 @@
                                 <option value="2" @if($user->gender == 2) selected @endif>Female</option>
                             </select>
 						</fieldset>
-                        <?php
+                        @php
                             $date_arr = explode('-',$user->dob);
                             $dob = $date_arr[2].'/'.$date_arr[1].'/'.$date_arr[0];
-                        ?>
+                        @endphp
                         <fieldset class="form-group">
                             <label class="form-label" for="date-mask-input">Date Of Birth</label>
                             <input type="text" class="form-control date-mask-input" name="dob" id="" value="{{$dob}}">

@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-	<link rel="stylesheet" href="/css/crude.css?ver=<?php echo date('Y-m-d');?>">
+	<link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
 @endsection
 
 <div class="page-content">

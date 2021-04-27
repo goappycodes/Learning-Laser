@@ -12,3 +12,12 @@
     word-break: break-word;
     font-size: 0.9em;
 }
+
+.select2-selection__choice {
+    color: #635d5d !important;
+    width: 21% !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #635d5d !important;
+}

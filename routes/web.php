@@ -115,7 +115,7 @@ Route::group(array('middleware' => [AdminAuthenticated​::class],'prefix' => 'd
 
 Route::group(array('prefix' => 'payroll'), function()
 {
-	Route::get('/', 'EmployeeController@payslip')->name('payroll')->middleware(AdminAuthenticated​::class);
+	Route::get('/', 'EmployeeController@payslip')->name('payroll')->middleware(UserAuthenticated::class);
 
 	Route::get('/add', 'EmployeeController@add_payrolls')->name('add_payrolls')->middleware(AdminAuthenticated​::class);
 

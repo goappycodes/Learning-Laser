@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-    <link rel="stylesheet" href="/css/crude.css?ver=<?php echo date('Y-m-d');?>">
+    <link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
 	<script src="/js/leaves.js"></script>
 @endsection
 
@@ -16,7 +16,7 @@
 								<div>
 								<h5>Leaves Left</h5>
 								<table>
-									<?php
+									@php
 										foreach($entitled as $entitle)
 										{
 											$total_days = $entitle->no_of_days;
@@ -29,14 +29,14 @@
 												}
 											}
 											$days_left = floatval($total_days - $days_taken);
-											?>
+									@endphp
 											<tr>
 												<td><strong>{{$entitle->leave_name}} :</strong></td>
 												<td>{{$days_left}}</td>
 											</tr>
-											<?php
+									@php
 										}
-									?>
+									@endphp
 								</table>
 								</div>
 							@endif

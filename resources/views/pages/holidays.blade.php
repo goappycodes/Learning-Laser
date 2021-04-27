@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section("content")
 @section('assets')
-		<link rel="stylesheet" href="/css/crude.css?ver=<?php echo date('Y-m-d');?>">
+		<link rel="stylesheet" href="/css/crude.css?ver=@php echo date('Y-m-d');@endphp">
 @endsection
 
 <div class="page-content">
@@ -41,11 +41,11 @@
 						</tfoot>
 						<tbody>
 						@foreach($holidays as $holiday)
-                        <?php
+                        @php
                             $unixTimestamp = strtotime($holiday->holiday_date);
                             $formatted_date = date("d/m/Y", $unixTimestamp);
                             $day = date("l", $unixTimestamp);
-                        ?>
+						@endphp
 						<tr>
 							<td>{{$formatted_date}} {{$day}}</td>
 							<td>{{$holiday->holiday_name}}</td>
