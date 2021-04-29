@@ -32,6 +32,7 @@
 							<th>Designation Name</th>
 							<th>DOB</th>
 							<th>Address</th>
+							<th>Leaves</th>
 							<th>Action</th>
 						</tr>
 						</thead>
@@ -48,6 +49,7 @@
 							<th>Designation Name</th>
 							<th>DOB</th>
 							<th>Address</th>
+							<th>Leaves</th>
 							<th>Action</th>
 						</tr>
 						</tfoot>
@@ -65,6 +67,7 @@
 							<td>{{$user->designation_name}}</td>
 							<td>{{$user->dob}}</td>
 							<td>{{$user->local_address}}</td>
+							<td>{{$user->leaves}}</td>
 							<td><a href="/employee/edit/{{$user->id}}"><i class="fa fa-pencil"></i></a></td>
 						</tr>
 						@endforeach

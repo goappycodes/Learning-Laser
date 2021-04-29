@@ -9,6 +9,7 @@ use App\Department;
 use App\Payroll;
 use App\Leave;
 use App\Entitlement;
+use App\Holiday;
 use DB;
 use Auth;
 
@@ -289,6 +290,8 @@ class EmployeeController extends Controller
         $current_month = $input_date_arr[1];
         $current_year = $input_date_arr[0];
         $users = User::all();
+        $holidays = Holiday::all();
+        $holiday_count = $holiday->count();
         foreach($users as $user)
         {
             $entitled_leaves = json_decode($user->entitlements);
@@ -387,7 +390,8 @@ class EmployeeController extends Controller
 
                     if($total_deficit > 0)
                     {
-                        $avg_one_day_salary = ($current_salary*12)/365;
+                        $day_count = 365 - $holiday_count;
+                        $avg_one_day_salary = ($current_salary*12)/$day_count;
                         $net_payable = $current_salary - ($avg_one_day_salary * $total_deficit);
                         $difference_any = $current_salary - $net_payable;
                     }
@@ -402,7 +406,44 @@ class EmployeeController extends Controller
                     Payroll::insert($insert_arr);
                 }
             }
+            else
+            {
+                $leaves = Leave::where('user_id',$user->id)->where('status',1)->get();
+                $salary = Salary::where('user_id',$user->id)->first();
+                if($salary)
+                {
+                    $current_salary = $salary->current_salary;
+                    $day_count = 365 - $holiday_count;
+                    $avg_one_day_salary = ($current_salary*12)/$day_count;
+                    $net_payable = $current_salary - ($avg_one_day_salary * count($leaves));
+                    $difference_any = $current_salary - $net_payable;
+                    $insert_arr = array('user_id'=>$user->id, 'salary' => $current_salary, 'month' => $current_month, 'year' => $current_year, 'net_payable' => $net_payable, 'difference_any' => $difference_any);
+                    Payroll::where('month',$current_month)->where('year',$current_year)->where('user_id',$user->id)->delete();
+                    Payroll::insert($insert_arr);
+                }
+            }
         }
         return redirect()->route('payroll');
+    }
+
+    public function add_bonus_differences(Request $request)
+    {
+        $input = $request->all();
+        $payroll_id = $input['payroll_id'];
+        $is_bonus = $input['bonus'];
+        $amount = $input['amount'];
+        $payroll = Payroll::find($payroll_id);
+        if($is_bonus == 1)
+        {
+            $payroll->bonus_any = $amount;
+            $payroll->net_payable = floatval($amount) + floatval($payroll->salary);
+            $payroll->save();
+        }
+        else
+        {
+            $payroll->difference_any = $amount;
+            $payroll->net_payable = floatval($payroll->salary) - floatval($amount);
+            $payroll->save();
+        }
     }
 }

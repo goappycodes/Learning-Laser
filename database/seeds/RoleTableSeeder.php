@@ -21,6 +21,11 @@ class RoleTableSeeder extends Seeder
                 'role_name' => 'Employee',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'role_name' => 'Self Employed',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ]
         ];
         foreach ($records as $record) {

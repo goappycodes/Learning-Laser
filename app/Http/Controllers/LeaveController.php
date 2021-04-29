@@ -146,13 +146,58 @@ class LeaveController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
-        $date = str_replace('/', '-', $input['leave_from']);
-        $input['leave_from'] = date('Y-m-d', strtotime($date));
-        $date = str_replace('/', '-', $input['leave_to']);
-        $input['leave_to'] = date('Y-m-d', strtotime($date));
-        $input['created_at'] = date('Y-m-d H:i:s');
-        Leave::insert($input);
-        return redirect()->route('add_leaves');
+        $leave_from = $input['leave_from'];
+        $leave_to = $input['leave_to'];
+        $input_date_arr = Leave::displayDates($leave_from,$leave_to);
+        $other_leaves = Leave::where('leave_to','>=',$leave_from)->where('status',1)->get();
+        $leaves_count_arr = [];
+        foreach($other_leaves as $leave)
+        {
+            foreach($input_date_arr as $date)
+            {
+                $date_from = $leave->leave_from;
+                $date_to = $leave->leave_to;
+                $stepVal = '+1 day';
+                while( $date_from <= $date_to ) {
+                    if(in_array($date_from,$input_date_arr))
+                    {
+                        if(isset($leaves_count_arr[$date_from]))
+                        {
+                            $leaves_count_arr[$date_from] = 1;
+                        }
+                        else
+                        {
+                            $leaves_count_arr[$date_from]++;
+                        }
+                    }
+                    $current = strtotime($stepVal, $current);
+                 }
+            }
+        }
+        $date = '';
+        foreach( $leaves_count_arr as $count_key => $count)
+        {
+            if($count > 2)
+            {
+                $date = $count_key;
+                break;
+            }
+        }
+        if($date)
+        {
+            return redirect()->route('add_leaves',['date' => $date]);
+        }
+        else
+        {
+            $date = str_replace('/', '-', $input['leave_from']);
+            $input['leave_from'] = date('Y-m-d', strtotime($date));
+            $date = str_replace('/', '-', $input['leave_to']);
+            $input['leave_to'] = date('Y-m-d', strtotime($date));
+            $input['created_at'] = date('Y-m-d H:i:s');
+            Leave::insert($input);
+            return redirect()->route('add_leaves');
+        }
+        
     }
 
     public function entitlements()

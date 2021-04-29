@@ -124,4 +124,6 @@ Route::group(array('prefix' => 'payroll'), function()
 	Route::post('/post', 'EmployeeController@post_payrolls')->name('post_payrolls')->middleware(AdminAuthenticated​::class);
 
 	Route::post('/create-post', 'EmployeeController@create_payrolls')->name('create_payrolls')->middleware(AdminAuthenticated​::class);
+
+	Route::post('/add_bonus_differences', 'EmployeeController@add_bonus_differences')->name('add_bonus_differences')->middleware(AdminAuthenticated​::class);
 });

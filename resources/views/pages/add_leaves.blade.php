@@ -19,6 +19,11 @@
             </div>
         </header>
         <div class="box-typical box-typical-padding">
+        <div id="error" style="color:red;">
+            @if(isset($date))
+                3 or more leaves have been granted on {{$date}}. Thus your leave could not be processed.
+            @endif
+        </div>
             <form method="post" action="{{url('leave/post')}}">
                 @csrf
                 <div class="form-group row">
