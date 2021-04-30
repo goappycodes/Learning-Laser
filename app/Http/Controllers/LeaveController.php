@@ -190,7 +190,7 @@ class LeaveController extends Controller
         else
         {
             Leave::insert($input);
-            return redirect()->route('add_leaves');
+            return redirect()->route('leaves');
         }
         
     }
