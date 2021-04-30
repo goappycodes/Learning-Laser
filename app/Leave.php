@@ -41,7 +41,8 @@ class Leave extends Model
         $date2 = strtotime($date2);
         $stepVal = '+1 day';
         while( $current <= $date2 ) {
-            $dates[] = date($format, $current);
+            // $dates[] = date($format, $current);
+            $dates[] = $current;
             $current = strtotime($stepVal, $current);
         }
         return $dates;
