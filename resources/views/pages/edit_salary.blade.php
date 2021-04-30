@@ -35,11 +35,11 @@
 						</fieldset>
                         <fieldset class="form-group">
                             <label class="form-label semibold" for="date-mask-input">Previous Salary</label>
-                            <input type="number" class="form-control" name="previous_salaray" id="previous_salaray" value="{{$salary->previous_salaray}}">
+                            <input type="number" class="form-control" name="previous_salaray" id="previous_salaray" value="{{$salary->previous_salaray}}" step=".01">
                         </fieldset>
                         <fieldset class="form-group">
                         <label class="form-label semibold" for="date-mask-input">Current Salary</label>
-                            <input type="number" class="form-control" name="current_salary" id="current_salary" value="{{$salary->current_salary}}">
+                            <input type="number" class="form-control" name="current_salary" id="current_salary" value="{{$salary->current_salary}}" step=".01">
                         </fieldset>
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Appraisal Month</label>

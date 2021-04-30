@@ -108,12 +108,10 @@ class LeaveController extends Controller
                         {
                             if(($starting_month - $current_month) <= 6)
                             {
-                                // $starting_date = $current_year.'-'.$starting_month.'-01';
                                 $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " - 6 months"));
                             }
                             else
                             {
-                                // $starting_date = $current_year.'-'.($starting_month + 6).'-01';
                                 $starting_date = date('Y-m-d', strtotime($current_year.'-'.$starting_month.'-01' . " + 6 months"));
                             }
                         }

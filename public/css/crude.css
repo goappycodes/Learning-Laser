@@ -21,3 +21,11 @@
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     color: #635d5d !important;
 }
+
+.select2-results__options .select2-results__option:hover {
+    color: black !important;
+}
+
+.select2-results__options .select2-results__option {
+    color: #635d5d !important;
+}
