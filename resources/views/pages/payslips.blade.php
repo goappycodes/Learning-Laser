@@ -53,7 +53,7 @@
 							$joining_date = date("d-m-Y", strtotime($payroll->joining_date));
 						@endphp
 						<tr>
-							<td>{{$user->f_name}} {{$user->l_name}}</td>
+							<td>{{$user ? $user->f_name: ""}} {{$user ? $user->l_name: ""}}</td>
 							<td>{{$payroll->salary}}</td>
                             <td>{{$payroll->net_payable}}</td>
 							<td>{{$months[$payroll->month - 1]}}</td>

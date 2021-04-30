@@ -291,7 +291,7 @@ class EmployeeController extends Controller
         $current_year = $input_date_arr[0];
         $users = User::all();
         $holidays = Holiday::all();
-        $holiday_count = $holiday->count();
+        $holiday_count = $holidays->count();
         foreach($users as $user)
         {
             $entitled_leaves = json_decode($user->entitlements);
