@@ -123,6 +123,14 @@
 							<textarea class="form-control" name="permanent_address" id="exampleInput">{{$user->permanent_address}}</textarea>
 						</fieldset>
                         <fieldset class="form-group">
+							<label class="form-label semibold" for="exampleInput">Countries</label>
+                            <select class="form-control" name="country_id" id="exampleInput">
+                                @foreach($countries as $country)
+                                <option @if($user->country_id == $country->id) selected @endif value="{{$country->id}}">{{$country->country_name}}</option>
+                                @endforeach
+                            </select>
+						</fieldset>
+                        <fieldset class="form-group">
                             <button type="submit" class="btn btn-inline">Submit</button>
                         </fieldset>
 					</div>

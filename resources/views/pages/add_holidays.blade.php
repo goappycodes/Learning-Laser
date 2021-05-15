@@ -33,6 +33,14 @@
                             <input type="text" class="form-control" name="holiday_name" id="holiday_name" placeholder="Holiday Name">
                         </fieldset>
                         <fieldset class="form-group">
+							<label class="form-label semibold" for="exampleInput">Countries</label>
+                            <select class="form-control" name="country_id" id="exampleInput">
+                                @foreach($countries as $country)
+                                <option value="{{$country->id}}">{{$country->country_name}}</option>
+                                @endforeach
+                            </select>
+						</fieldset>
+                        <fieldset class="form-group">
                             <button type="submit" class="btn btn-inline">Submit</button>
                         </fieldset>
 					</div>

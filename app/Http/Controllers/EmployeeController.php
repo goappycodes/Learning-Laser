@@ -44,7 +44,8 @@ class EmployeeController extends Controller
         $designations = DB::select("select * from designations");
         $departments = DB::select("select * from departments");
         $entitlements = DB::select("select * from entitled_leaves");
-        return view('pages.add_employees',['roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements]);
+        $countries = DB::select("select * from countries");
+        return view('pages.add_employees',['roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements, 'countries' => $countries]);
     }
 
     public function edit_employees($id)
@@ -54,7 +55,8 @@ class EmployeeController extends Controller
         $designations = DB::select("select * from designations");
         $departments = DB::select("select * from departments");
         $entitlements = DB::select("select * from entitled_leaves");
-        return view('pages.edit_employees',['user' => $user, 'roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements]);
+        $countries = DB::select("select * from countries");
+        return view('pages.edit_employees',['user' => $user, 'roles' => $roles, 'designations' => $designations, 'departments' => $departments, 'entitlements' => $entitlements, 'countries' => $countries]);
     }
 
     public function post_employees(Request $request)
@@ -294,6 +296,21 @@ class EmployeeController extends Controller
         $holiday_count = $holidays->count();
         foreach($users as $user)
         {
+            if($user->role_id == 3)
+            {
+                $holiday_count = 0;
+            }
+            else
+            {
+                $holiday_count = 0;
+                foreach($holidays as $holiday)
+                {
+                    if(($holiday->country_id == null)||($holiday->country_id == $user->country_id))
+                    {
+                        $holiday_count++;
+                    }
+                }
+            }
             $entitled_leaves = json_decode($user->entitlements);
             if($entitled_leaves)
             {

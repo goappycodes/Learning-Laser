@@ -241,13 +241,15 @@ class LeaveController extends Controller
 
     public function add_holidays()
     {
-        return view('pages.add_holidays');
+        $countries = DB::select("select * from countries");
+        return view('pages.add_holidays',['countries' => $countries]);
     }
 
     public function edit_holidays($id)
     {
         $holiday = Holiday::find($id);
-        return view('pages.edit_holidays',['holiday' => $holiday]);
+        $countries = DB::select("select * from countries");
+        return view('pages.edit_holidays',['holiday' => $holiday,'countries' => $countries]);
     }
 
     public function post_holidays(Request $request)
