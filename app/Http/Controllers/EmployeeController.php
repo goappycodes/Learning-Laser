@@ -305,7 +305,11 @@ class EmployeeController extends Controller
                 $holiday_count = 0;
                 foreach($holidays as $holiday)
                 {
-                    if(($holiday->country_id == null)||($holiday->country_id == $user->country_id))
+                    if(($holiday->country_id == null)&&($user->country_id == null))
+                    {
+                        $holiday_count++;
+                    }
+                    elseif(($holiday->country_id == null)||($holiday->country_id == $user->country_id))
                     {
                         $holiday_count++;
                     }
@@ -421,6 +425,7 @@ class EmployeeController extends Controller
                     Payroll::insert($insert_arr);
                 }
             }
+          
             else
             {
                 $leaves = Leave::where('user_id',$user->id)->where('status',1)->get();

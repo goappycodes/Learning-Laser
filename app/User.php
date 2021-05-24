@@ -22,7 +22,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'f_name', 'l_name', 'email', 'password','employee_id','role_id','department_id','designation_id','joining_date','gender','dob','ph_no','local_address','permanent_address','created_at','updated_at'
+        'f_name', 'l_name', 'email', 'password','employee_id','role_id','department_id','designation_id','joining_date','gender','dob','ph_no','local_address','permanent_address','created_at','updated_at','country_id'
     ];
 
     /**

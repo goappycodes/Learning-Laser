@@ -9,6 +9,6 @@ class Holiday extends Model
     protected $table = 'holidays';
 
     protected $fillable = [
-        'holiday_date', 'holiday_name', 'created_at','updated_at'
+        'holiday_date', 'holiday_name', 'created_at','updated_at','country_id'
     ];
 }
