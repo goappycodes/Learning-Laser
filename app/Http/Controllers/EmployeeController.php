@@ -67,6 +67,10 @@ class EmployeeController extends Controller
         // echo '<pre>';
         // print_r($input);
         // exit;
+        if(isset($input['password']))
+        {
+            $input['password'] = bcrypt($input['password']);
+        }
         $date = str_replace('/', '-', $input['joining_date']);
         $input['joining_date'] = date('Y-m-d', strtotime($date));
         $date = str_replace('/', '-', $input['dob']);

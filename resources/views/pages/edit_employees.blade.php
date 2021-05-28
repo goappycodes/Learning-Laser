@@ -37,8 +37,13 @@
 						</fieldset>
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Email</label>
-							<input type="text" class="form-control" name="email" id="exampleInput" placeholder="Email" value="{{$user->email}}">
-							<small class="text-muted">We'll never share your email with anyone else.</small>
+							<input type="text" class="form-control" name="email" id="exampleInput" placeholder="Email" value="{{$user->email}}" required>
+							<!-- <small class="text-muted">We'll never share your email with anyone else.</small> -->
+						</fieldset>
+                        <fieldset class="form-group">
+							<label class="form-label semibold" for="passeordInput">Password</label>
+							<input type="text" class="form-control" name="password" id="passeordInput" placeholder="Password" required>
+                            <small class="text-muted">If this field is left blank, the password for the employee will remain unchanged.*</small>
 						</fieldset>
                         <fieldset class="form-group">
 							<label class="form-label semibold" for="exampleInput">Employee ID</label>
